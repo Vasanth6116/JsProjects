@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
     nextbtn.classList.add("hidden");
     //displaing ques
     quesText.textContent = questions[currentQues].question;
-    choiceList.innerHTM = "";
+    choiceList.innerHTML = "";
     //displaing the options
     questions[currentQues].choices.forEach((choices) => {
       const li = document.createElement("li");
@@ -59,4 +59,30 @@ document.addEventListener("DOMContentLoaded", () => {
       choiceList.appendChild(li);
     });
   }
+  //validating the ans
+  function selectAns(choice) {
+    if (choice == questions[currentQues].answer) {
+      score++;
+    }
+    nextbtn.classList.remove("hidden");
+  }
+  nextbtn.addEventListener("click", () => {
+    currentQues++;
+    if (currentQues < questions.length) {
+      showQuestions();
+    } else {
+      showRes();
+    }
+  });
+  function showRes() {
+    quesContainer.classList.add("hidden");
+    resultcontainer.classList.remove("hidden");
+    scoreElement.textContent = `${score} out of ${questions.length} `;
+  }
+  restartbtn.addEventListener("click", () => {
+    currentQues = 0;
+    score = 0;
+    resultcontainer.classList.add("hidden");
+    startQuiz();
+  });
 });
